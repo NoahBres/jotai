@@ -40,6 +40,8 @@ class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, pri
 
         if (currentState.transitionCondition?.shouldTransition() == true)
             transition()
+
+        currentState.loopActions.forEach { it.run() }
     }
 
     // returns true if change in state

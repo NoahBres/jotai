@@ -12,7 +12,7 @@ class StateMachineBuilder<StateEnum> {
         if (stateList.find { it.state == state } != null)
             throw Error("State already exists in list")
 
-        stateList.add(State(state, mutableListOf(), mutableListOf(), null))
+        stateList.add(State(state, mutableListOf(), mutableListOf(), mutableListOf(), null))
 
         return this
     }
@@ -32,7 +32,7 @@ class StateMachineBuilder<StateEnum> {
     fun onEnter(callback: ActionCallback): StateMachineBuilder<StateEnum> {
         if (stateList.isEmpty())
             throw Error("No state to modify")
-        
+
         stateList.last().enterActions.add(callback)
 
         return this
@@ -43,6 +43,15 @@ class StateMachineBuilder<StateEnum> {
             throw Error("No state to modify")
 
         stateList.last().exitActions.add(callback)
+
+        return this
+    }
+
+    fun loop(callback: ActionCallback): StateMachineBuilder<StateEnum> {
+        if (stateList.isEmpty())
+            throw Error("No state to modify")
+
+        stateList.last().loopActions.add(callback)
 
         return this
     }
