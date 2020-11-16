@@ -62,6 +62,7 @@ internal class StateMachineTest {
         // State shouldn't update because it has no transition
         assert(stateMachine.getState() == MyStates.STATE_3)
 
+        // Force transition
         stateMachine.transition()
 
         stateMachine.update()
@@ -69,7 +70,57 @@ internal class StateMachineTest {
         assert(stateMachine.getState() == MyStates.IDLE)
 
         // State machine reached exit condition
-        assert(stateMachine.running)
+        assert(!stateMachine.running)
+    }
+
+    @Test
+    fun stateMachine_transitionNoExitTest() {
+        val stateMachine = StateMachineBuilder<MyStates>()
+                .state(MyStates.IDLE)
+                .waitForStart()
+
+                .state(MyStates.STATE_1)
+                .transition { true }
+
+                .state(MyStates.STATE_2)
+                .transition { true }
+
+                .build()
+
+        stateMachine.start()
+
+        stateMachine.update()
+
+        assert(stateMachine.getState() == MyStates.STATE_1)
+
+        stateMachine.update()
+
+        assert(stateMachine.getState() == MyStates.STATE_2)
+
+        stateMachine.update()
+
+        assert(stateMachine.getState() == MyStates.STATE_2)
+    }
+
+    @Test
+    fun stateMachine_noWaitForStart() {
+        val stateMachine = StateMachineBuilder<MyStates>()
+                .state(MyStates.IDLE)
+                .transition { true }
+
+                .state(MyStates.STATE_1)
+                .transition { true }
+
+                .state(MyStates.STATE_2)
+
+                .build()
+
+        stateMachine.start()
+
+        stateMachine.update()
+        stateMachine.update()
+
+        assert(stateMachine.getState() == MyStates.STATE_2)
     }
 
     private fun buildStateMachine(): StateMachine<MyStates> {
