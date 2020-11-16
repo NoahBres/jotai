@@ -5,14 +5,29 @@ class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, pri
     var running = false
         private set
 
+    var looping = false
+
     private var currentState = stateList.first()
 
     fun start() {
         running = true
 
         stateList.forEach {
-            if(it.transitionCondition is WaitOnStartTransition)
+            if (it.transitionCondition is WaitOnStartTransition)
                 (it.transitionCondition as WaitOnStartTransition).hasStarted = true
+        }
+    }
+
+    fun stop() {
+        running = false
+    }
+
+    fun reset() {
+        currentState = stateList.first()
+
+        stateList.forEach {
+            if (it.transitionCondition is WaitOnStartTransition)
+                (it.transitionCondition as WaitOnStartTransition).hasStarted = false
         }
     }
 
@@ -23,7 +38,7 @@ class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, pri
     fun update() {
         if (!running) return
 
-        if(currentState.transitionCondition?.shouldTransition() == true)
+        if (currentState.transitionCondition?.shouldTransition() == true)
             transition()
     }
 
@@ -33,10 +48,15 @@ class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, pri
         currentState.exitActions.forEach { it.run() }
 
         if (stateList.last() == currentState) {
+            if (!looping)
+                running = false
+
             // Reset WaitOnStartTransitions
-            stateList.forEach {
-                if(it.transitionCondition is WaitOnStartTransition)
-                    (it.transitionCondition as WaitOnStartTransition).hasStarted = false
+            if (!looping) {
+                stateList.forEach {
+                    if (it.transitionCondition is WaitOnStartTransition)
+                        (it.transitionCondition as WaitOnStartTransition).hasStarted = false
+                }
             }
 
             // If we want to exit to a certain state, set currentState to that state
@@ -44,7 +64,7 @@ class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, pri
             if (exitToState != null) {
                 val searchForState = stateList.find { it.state == exitToState }
 
-                if(searchForState != null) currentState = searchForState else return false
+                if (searchForState != null) currentState = searchForState else return false
             } else {
                 return false
             }
@@ -52,12 +72,9 @@ class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, pri
             currentState = stateList[stateList.indexOf(currentState) + 1]
         }
 
-        currentState.enterActions.forEach {
-            println(it)
-            it.run()
-        }
+        currentState.enterActions.forEach { it.run() }
 
-        if(currentState.transitionCondition is TimedTransition)
+        if (currentState.transitionCondition is TimedTransition)
             (currentState.transitionCondition as TimedTransition).startTimer()
 
         return true
