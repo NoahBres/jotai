@@ -1,4 +1,4 @@
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.lang.Thread.sleep
 
 internal class StateMachineTest {
