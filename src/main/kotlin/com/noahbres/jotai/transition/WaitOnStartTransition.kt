@@ -1,6 +1,4 @@
-package transition
-
-import transition.TransitionCondition
+package com.noahbres.jotai.transition
 
 class WaitOnStartTransition: TransitionCondition {
     var hasStarted = false

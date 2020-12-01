@@ -1,5 +1,7 @@
-import transition.TimedTransition
-import transition.WaitOnStartTransition
+package com.noahbres.jotai
+
+import com.noahbres.jotai.transition.TimedTransition
+import com.noahbres.jotai.transition.WaitOnStartTransition
 
 class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, private val exitToState: StateEnum?) {
     var running = false
