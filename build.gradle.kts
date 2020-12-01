@@ -15,12 +15,13 @@ plugins {
     kotlin("jvm") version "1.4.10"
 
     `maven-publish`
+
     id("com.jfrog.bintray") version "1.8.5"
 }
 
 val artifactName = "jotai"
 val artifactGroup = "com.noahbres.jotai"
-val artifactVersion = "1.0.0"
+val artifactVersion = "1.0-SNAPSHOT"
 
 val pomUrl = "https://github.com/NoahBres/jotai"
 val pomScmUrl = "https://github.com/NoahBres/jotai"
@@ -47,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")
@@ -67,8 +68,8 @@ publishing {
             groupId = artifactGroup
             artifactId = artifactName
             version = artifactVersion
-            from(components["java"])
 
+            from(components["java"])
             artifact(sourcesJar)
 
             pom.withXml {
@@ -90,6 +91,12 @@ publishing {
                     }
                 }
             }
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri("$buildDir/repository")
         }
     }
 }
