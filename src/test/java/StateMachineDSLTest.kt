@@ -143,7 +143,7 @@ internal class StateMachineDSLTest {
                 }
 
                 +state(MyStates.STATE_2) {
-                    transitionTime(0.3)
+                    transitionTimed(0.3)
                 }
 
                 +state(MyStates.STATE_3)

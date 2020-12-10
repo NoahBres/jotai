@@ -45,7 +45,7 @@ class StateContext<StateEnum>(state: StateEnum) {
         currentState.transitionCondition = transitionCondition
     }
 
-    fun transitionTime(time: Number): StateContext<StateEnum> = this.apply {
+    fun transitionTimed(time: Number): StateContext<StateEnum> = this.apply {
         transition(TimedTransition(time.toDouble()))
     }
 
