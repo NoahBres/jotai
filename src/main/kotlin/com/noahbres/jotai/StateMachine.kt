@@ -17,6 +17,11 @@ class StateMachine<StateEnum>(private val stateList: List<State<StateEnum>>, pri
         stateList.forEach {
             if (it.transitionCondition is WaitOnStartTransition)
                 (it.transitionCondition as WaitOnStartTransition).hasStarted = true
+
+            if (currentState.transitionCondition is TimedTransition)
+                (currentState.transitionCondition as TimedTransition).startTimer()
+
+            currentState.enterActions.forEach { me -> me.run() }
         }
     }
 
