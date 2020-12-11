@@ -1,4 +1,4 @@
-package transition
+package com.noahbres.jotai.transition
 
 class TimedTransition(val time: Double): TransitionCondition {
     private var startTime = 0L

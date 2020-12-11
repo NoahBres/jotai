@@ -1,4 +1,6 @@
-import org.junit.Test
+import com.noahbres.jotai.StateMachine
+import com.noahbres.jotai.StateMachineBuilder
+import org.junit.jupiter.api.Test
 import java.lang.Thread.sleep
 
 internal class StateMachineTest {
@@ -30,14 +32,14 @@ internal class StateMachineTest {
         // Check the transition
         stateMachine.update()
 
-        // State shouldnt transition yet
+        // com.noahbres.jotai.State shouldnt transition yet
         assert(stateMachine.getState() == MyStates.STATE_1)
 
         conditionTest = true
 
         stateMachine.update()
 
-        // State should update after conditionTest = true
+        // com.noahbres.jotai.State should update after conditionTest = true
         assert(stateMachine.getState() == MyStates.STATE_2)
 
         // Check that the state1 on exit is called
@@ -47,19 +49,19 @@ internal class StateMachineTest {
 
         stateMachine.update()
 
-        // State shouldnt transition yet because only 1 second passed
+        // com.noahbres.jotai.State shouldnt transition yet because only 1 second passed
         assert(stateMachine.getState() == MyStates.STATE_2)
 
         sleep(200)
 
         stateMachine.update()
 
-        // State should transition because 2.1 seconds has passed
+        // com.noahbres.jotai.State should transition because 2.1 seconds has passed
         assert(stateMachine.getState() == MyStates.STATE_3)
 
         stateMachine.update()
 
-        // State shouldn't update because it has no transition
+        // com.noahbres.jotai.State shouldn't update because it has no transition
         assert(stateMachine.getState() == MyStates.STATE_3)
 
         // Force transition
@@ -69,7 +71,7 @@ internal class StateMachineTest {
 
         assert(stateMachine.getState() == MyStates.IDLE)
 
-        // State machine reached exit condition
+        // com.noahbres.jotai.State machine reached exit condition
         assert(!stateMachine.running)
     }
 

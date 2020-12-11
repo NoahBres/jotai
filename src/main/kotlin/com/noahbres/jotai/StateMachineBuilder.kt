@@ -1,6 +1,8 @@
-import transition.TimedTransition
-import transition.TransitionCondition
-import transition.WaitOnStartTransition
+package com.noahbres.jotai
+
+import com.noahbres.jotai.transition.TimedTransition
+import com.noahbres.jotai.transition.TransitionCondition
+import com.noahbres.jotai.transition.WaitOnStartTransition
 
 class StateMachineBuilder<StateEnum> {
 
@@ -10,7 +12,7 @@ class StateMachineBuilder<StateEnum> {
 
     fun state(state: StateEnum): StateMachineBuilder<StateEnum> {
         if (stateList.find { it.state == state } != null)
-            throw Error("State already exists in list")
+            throw Error("com.noahbres.jotai.State already exists in list")
 
         stateList.add(State(state, mutableListOf(), mutableListOf(), mutableListOf(), null))
 
