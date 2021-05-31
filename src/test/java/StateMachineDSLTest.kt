@@ -1,5 +1,7 @@
-import dsl.stateMachine
-import org.junit.Test
+import com.noahbres.jotai.StateMachine
+import com.noahbres.jotai.StateMachineBuilder
+import com.noahbres.jotai.dsl.stateMachine
+import org.junit.jupiter.api.Test
 import java.lang.Thread.sleep
 
 internal class StateMachineDSLTest {
