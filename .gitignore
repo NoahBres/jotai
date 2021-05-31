@@ -24,6 +24,8 @@ hs_err_pid*
 
 # Ignore Gradle project-specific cache directory
 .gradle
+# We want the Gradle wrapper for jitpack
+!gradle-wrapper.jar
 
 # Ignore Gradle build output directory
 build
