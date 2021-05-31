@@ -5,9 +5,6 @@
     <a href="#-install">Install</a> &mdash;
     <a href="#-usage">usage</a>
 </p>
-<p align="center">
-[![Release](https://jitpack.io/v/NoahBres/jotai.svg)](https://jitpack.io/#NoahBres/jotai)
-</p>
 
 ## 🤷‍️ What is it?
 
@@ -16,6 +13,8 @@ Jotai makes finite state machines easy.
 ## ⚙️ Sample
 
 ## 📦 Install
+
+[![Release](https://jitpack.io/v/NoahBres/jotai.svg)](https://jitpack.io/#NoahBres/jotai)
 
 ```groovy
 repositories {
